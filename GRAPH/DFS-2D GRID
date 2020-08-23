@@ -1,0 +1,47 @@
+
+vector<char> v[1004];
+int cnt;
+int vis[1002][1002];
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+int n, m;
+bool good(int i,int j)
+{
+	if(i<0||i>=n || j<0 || j>=m) return false;
+	if(vis[i][j]==1 || v[i][j]=='#') return false;
+	return true;
+	
+}
+
+void dfs(int i,int j)
+{
+	vis[i][j]=1;
+	for(int k=0;k<4;k++)
+	{
+		if(good(i+dx[k],j+dy[k])) dfs(i+dx[k],j+dy[k]);
+	}	
+}
+
+int main()
+{
+	
+
+	cin>>n>>m;
+	
+	rep(i,n)
+		rep(j,m)
+		{
+			char s;
+			cin>>s;
+			v[i].pb(s);
+		}
+	cnt=0;	
+	rep(i,n)
+		rep(j,m)
+		{
+			if(vis[i][j]==0 && v[i][j]=='.') cnt++, dfs(i,j);
+		}
+	cout<<cnt<<endl;	
+}
+
+
