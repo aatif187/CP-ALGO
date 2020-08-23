@@ -1,0 +1,22 @@
+int LCA(int a,int b)
+{
+	int d=level[b]-level[a];
+	//check d is positive or not, else swap
+	while(d--)
+	{
+		b=level[b];
+		d--;
+	}
+	
+	if(b==a) return a;
+	while(par[a]!=par[b])
+	{
+		a=par[a];
+		b=par[b];
+	}
+	return par[a];
+	
+}
+
+
+DIJKSTRA’S ALGO
