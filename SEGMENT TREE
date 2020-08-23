@@ -1,0 +1,51 @@
+int a[100002];
+int st[400002];
+int n;
+
+int min_range(int index,int ss,int se,int qs,int qe)
+{
+	
+	if(ss>qe || se<qs) //outside query
+		return MOD;
+	if(ss>=qs && se<=qe) //completely inside
+		return st[index];
+	
+	int mid=(ss+se)/2;
+	
+	int l=min_range(index*2,ss,mid,qs,qe);
+	int r=min_range(index*2+1,mid+1,se,qs,qe);
+	
+	return min(l,r);
+}
+
+
+void build_tree(int index,int ss,int se)
+{
+	if(ss==se) {st[index]=a[ss]; return;}//leaf node
+	
+	int mid=(ss+se)/2;
+	build_tree(index*2 ,ss ,mid);
+	build_tree(index*2+1, mid+1 ,se);
+	
+	st[index]=min(st[index*2],st[index*2+1]); //backtracking ---node filing
+	
+}
+
+int main()
+{
+	
+	cin>>n;
+	rep(i,n)
+		cin>>a[i];
+	build_tree(1,1,n);
+	int q;
+	cin>>q;
+	rep(i,q)
+		{
+			int qs,qe;
+			cin>>qs>>qe;
+			cout<<min_range(1,1,n,qs+1,qe+1)<<endl;
+		}
+	
+	
+}
