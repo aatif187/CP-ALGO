@@ -1,0 +1,53 @@
+vector<char> v[34];
+int vis[32][32];
+int dist[32][32];
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+int n, srci,srcj,endi,endj;
+bool good(int i,int j)
+{
+	if(i<0||i>=n || j<0 || j>=n) return false;
+	if(vis[i][j]==1 || v[i][j]=='T') return false;
+	return true;
+	
+}
+
+void bfs(int i,int j)
+{
+	queue<pair<int,int>>q;
+	q.push({i,j});
+	vis[i][j]=1;
+	dist[i][j]=0;
+	while(!q.empty()){
+		int topi=q.front().F;
+		int topj=q.front().S;
+		q.pop();
+		for(int k=0;k<4;k++)
+		if(good(topi+dx[k],topj+dy[k])) {
+			vis[topi+dx[k]][topj+dy[k]]=1;
+			dist[topi+dx[k]][topj+dy[k]]=dist[topi][topj]+1;
+			q.push({topi+dx[k],topj+dy[k]});
+		}
+	}	
+}
+
+int main()
+{
+	
+
+	cin>>n;
+	
+	rep(i,n)
+		rep(j,n)
+		{
+			char s;
+			cin>>s;
+			v[i].pb(s);
+			if(s=='S') srci=i,srcj=j;
+			if(s=='E') endi=i,endj=j;
+		}
+	
+	bfs(srci,srcj);
+	cout<<dist[endi][endj]<<endl;	
+}
+
