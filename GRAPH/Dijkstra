@@ -1,0 +1,43 @@
+vector<pair<int,int>>ed[1000];
+int dist[10000];
+
+
+int main()
+{
+	int n,m;
+	cin>>n>>m;
+	while(m--)
+	{
+	int a,b,w;
+	cin>>a>>b>>w;
+	ed[a].pb({b,w});
+	ed[b].pb({a,w});
+	}
+	
+	priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+	vi dist(n+1,MOD);
+	pq.push({0,1});
+	dist[1]=0;
+	while(!pq.empty())
+	{
+		int node=pq.top().S;
+		int node_d=pq.top().F;
+		pq.pop();
+		if(node_d!=dist[node]) continue;
+		for(auto child: ed[node])
+		{
+			if(node_d + child.S <dist[child.F])
+			{
+				dist[child.F]=node_d+child.S;
+				pq.push({dist[child.F],child.F});
+			}
+		}
+		
+	}
+	
+	for(int i=1;i<=n;i++)
+	{
+		cout<<dist[i]<<" ";
+	}
+  cout<<endl;
+}
