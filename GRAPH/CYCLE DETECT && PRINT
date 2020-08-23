@@ -1,0 +1,73 @@
+vi ed[200002];
+bool vis[100002];
+int par[100002];
+vi cyc;
+bool dfs(int src,int head)
+{
+	vis[src]=1;
+	par[src]=head;
+	for(auto ch: ed[src])
+	{
+		if(!vis[ch])
+		{
+			//cout<<ch<<endl;
+			if(dfs(ch,src)) return true;
+		}
+		else if(ch!=par[src]) {
+			par[ch]=src;
+			//cout<<" inn "<< ch<< "   "<<par[ch];
+			int point=ch;
+			while(ch!=par[point])
+			{
+				//cout<<"ppp";
+				cyc.pb(point);
+				point=par[point];
+				//cout<<ch<<"   ----"<<point<<endl;
+			}
+			cyc.pb(point);
+			cyc.pb(ch);
+			return true;
+		}
+	}
+	return false;
+}
+int main()
+{
+	int n,m;
+	cin>>n>>m;
+	while(m--)
+	{
+		int x,y;
+		cin>>x>>y;
+		ed[x].pb(y);
+		ed[y].pb(x);
+	}
+	int flag=0;
+	rep(i,n){
+		if(!vis[i])
+		{
+			if(dfs(i,0)){
+				flag=1;
+				break;
+			}
+			if(flag) break;
+		}
+		if(flag) break;
+		
+	}
+	
+	if(flag==1){
+		cout<<cyc.size()<<endl;
+		for(auto in:cyc) {
+		cout<<in<<" ";
+		} cout<<endl;
+		
+	}
+	else cout<<"IMPOSSIBLE"<<endl;
+		
+}
+
+
+
+
+
