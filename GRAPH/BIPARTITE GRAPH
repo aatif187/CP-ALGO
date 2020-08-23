@@ -1,0 +1,16 @@
+
+bool dfs(int src,int c)
+{
+	vis[src]=1;
+	res[src]=c;
+	
+	for(auto ch: ed[src])
+	{
+		if(!vis[ch])
+		{
+			if(!dfs(ch,c^1)) return false;
+		}
+		else if(res[src]==res[ch]) return false;
+	}
+	return true;
+}
