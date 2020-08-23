@@ -1,0 +1,20 @@
+//               ()           ()     ()()()()()  ()    ()()()()()         
+//              ()()         ()()        ()      ()    ()                 
+//             ()  ()       ()  ()       ()      ()    ()                 
+//            ()()()()    ()()()()     ()      ()    ()()()()           
+//           ()      ()   ()      ()     ()      ()    ()                 
+//          ()        () ()        ()    ()      ()    ()                 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD  (int)(1e9+7)
+#define SIZE (int)(1e5+5)
+#define all(x) x.begin(),x.end()
+#define  rep(x,y)  for(int x=0;x<y; x++)
+#define vi   vector <int>
+#define lb     lower_bound
+#define ub     upper_bound
+#define  pb     push_back
+#define F      first
+#define S      second
+#define ll   long long 
