@@ -1,0 +1,62 @@
+int parent [100002];
+
+int find(int a)
+{
+	if(parent[a]==a){
+		return a;
+	}
+	else return parent[a]=find(parent[a]);
+}
+void merge(int a,int b)
+{
+	//cout<<parent[a]<<" "<<parent[b]<<endl;
+	int maxi=max(parent[a],parent[b]);
+	if(maxi==parent[a])
+	{
+		parent[b]=parent[a];
+	}
+	else{
+		parent[a]=parent[b];
+	}
+	//cout<<parent[a]<<" "<<parent[b]<<endl;
+}
+
+int main()
+{
+	int n,m;
+	cin>>n>>m;
+	//int parent[100002];
+	rep(i,n)
+		parent[i]=i;
+		
+	while(m--)
+	{
+		int a,b;
+		cin>>a>>b;
+		
+		a=find(a);
+		b=find(b);
+		//cout<<a<<"      "<<b<<endl;
+		if(a!=b)
+			merge(a,b);
+	}
+	
+	
+	int q;
+	cin>>q;
+	while(q--)
+	{
+		int a,b;
+		cin>>a>>b;
+		int x=find(a);
+		int y=find(b);
+		if(x==y) cout<<"TIE"<<endl;
+		else if(parent[a]>parent[b])
+		{
+			cout<<a<<endl;
+		}
+		else cout<<b<<endl;
+	}
+	
+}
+
