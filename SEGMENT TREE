@@ -1,0 +1,103 @@
+int a[100002];
+pair<int,int> st[400004];
+int n;
+
+void update(int index,int ss,int se, int qi,int qv)
+{
+	if(ss==se)
+	{
+		if(a[ss]%2==0) st[index]={1,0};
+		else st[index]={0,1};
+		
+		a[ss]=qv;
+		return;
+	}
+	
+	int mid=(ss+se)/2;
+	
+	if(qi<=mid) update(index*2,ss,mid,qi,qv);
+	else update(index*2+1,mid+1,se,qi,qv);
+	
+	st[index].F=st[index*2].F+st[index*2+1].F;
+	st[index].S=st[index*2].S+st[index*2+1].S;
+	
+	
+}
+int find_val_odd(int index,int ss,int se,int qs,int qe)
+{
+	
+	if(ss>qe || se<qs) //outside query
+		return 0;
+	if(ss>=qs && se<=qe) //completely inside
+		return st[index].F;
+	
+	int mid=(ss+se)/2;
+	
+	int l=find_val_odd(index*2,ss,mid,qs,qe);
+	int r=find_val_odd(index*2+1,mid+1,se,qs,qe);
+	
+	return l+r;
+}
+
+
+int find_val_ev(int index,int ss,int se,int qs,int qe)
+{
+	
+	if(ss>qe || se<qs) //outside query
+		return 0;
+	if(ss>=qs && se<=qe) //completely inside
+		return st[index].S;
+	
+	int mid=(ss+se)/2;
+	
+	int l=find_val_ev(index*2,ss,mid,qs,qe);
+	int r=find_val_ev(index*2+1,mid+1,se,qs,qe);
+	
+	return l+r;
+}
+
+
+void build_tree(int index,int ss,int se)
+{
+	if(ss==se) {
+		if(a[ss]%2==0) st[index]={0,1};
+		else st[index]={1,0};
+		return;
+	
+	}//leaf node
+	
+	int mid=(ss+se)/2;
+	build_tree(index*2 ,ss ,mid);
+	build_tree(index*2+1, mid+1 ,se);
+	
+	st[index].F=st[index*2].F+st[index*2+1].F; 
+	st[index].S=st[index*2].S+st[index*2+1].S; 	
+}
+
+int main()
+{
+	
+	cin>>n;
+	rep(i,n)
+		cin>>a[i];
+	build_tree(1,1,n);
+//	for(int j=1;j<n*4;j++)
+//		cout<<st[j].F<<" "<<st[j].S<<endl;
+//		cout<<endl;
+	int q;
+	cin>>q;
+	rep(i,q)
+		{
+			int y,b,c;
+			cin>>y>>b>>c;
+			if(y==0) {
+				if((a[b]%2)==(c%2)) continue;
+				else update(1,1,n,b,c);
+			}	
+			else if(y==1) cout<<find_val_ev(1,1,n,b,c)<<endl;
+			else cout<<find_val_odd(1,1,n,b,c)<<endl;	
+		}
+	
+	
+}
+
