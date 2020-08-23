@@ -1,0 +1,70 @@
+vi edge[10002];
+int vis[10002],in[10002],low[10002];
+set<int>art;
+int timer;
+
+void dfs(int node, int par)
+{
+	vis[node]=1;
+	in[node]=low[node]=timer++;
+	int cnt_conn=0;
+	for(auto child: edge[node])
+	{
+		
+		if(child==par) continue;
+		
+		if(vis[child]==1)
+		{
+			low[node]=min(low[node],in[child]);
+			
+		}
+		else
+		{
+			dfs(child,node);
+			cnt_conn++;
+			low[node]=min(low[node],low[child]);
+			if(in[node]<=low[child] && par!=-1) art.insert(node);
+		}
+		
+	}
+	
+	if(par==-1 && cnt_conn>1) art.insert(node);
+}
+
+
+int main()
+{
+	while(1){
+	int n,m;
+	cin>>n>>m;
+	if(n==0 && m==0){
+		break;
+	}
+	rep(j,n)
+	{
+		vis[j]=0;
+		edge[j].clear();
+	}
+	
+	art.clear();
+	timer=1;
+	rep(i,m)
+	{
+		int v,u;
+		cin>>v>>u;
+		edge[v].pb(u);
+		edge[u].pb(v);
+	}
+	
+	rep(j,n)
+	{
+		if(vis[j]==0) dfs(j,-1);
+	}
+	
+	cout<<art.size()<<endl;
+}
+}
+
+
+
+
