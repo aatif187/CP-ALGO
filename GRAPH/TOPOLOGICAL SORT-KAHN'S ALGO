@@ -1,0 +1,47 @@
+vi edge[10002];
+int in[10002];
+vi res;
+
+
+bool kahns(int n)
+{
+	priority_queue<int,vi,greater<int>> toposort;
+	
+	rep(i,n) if(in[i]==0) toposort.push(i);
+	
+	while(!toposort.empty())
+	{
+		
+		int child=toposort.top();
+		res.pb(child);
+		toposort.pop();
+		
+		for( auto k:edge[child]){
+		in[k]--;
+		if(in[k]==0) toposort.push(k);	
+		}
+	}
+	return res.size()==n;
+	
+}
+
+
+int main()
+{
+	
+	int n,m;
+	cin>>n>>m;
+	
+	rep(i,m)
+	{
+		int v,u;
+		cin>>v>>u;
+		edge[v].pb(u);
+		in[u]++;
+	}
+	
+	if(!kahns(n)) cout<<"Sandro fails.";
+	else
+	for(auto l:res) cout<<l<<" "; cout<<endl;
+
+}
