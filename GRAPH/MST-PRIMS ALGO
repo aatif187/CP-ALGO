@@ -1,0 +1,52 @@
+vector<pair<int,int>>ed[100000];
+bool vis[100000];
+int n;
+
+ll prims_mst()
+{
+	pqs pq;
+	pq.push({0,1});
+	
+	
+	ll ans=0;
+	
+	while(!pq.empty())
+	{
+		
+		auto best=pq.top();
+		pq.pop();
+		int to=best.S;
+		int wt=best.F;
+		
+		if(vis[to]==1) continue;
+		ans+=wt;
+		
+		vis[to]=1;
+		for(auto x:ed[to])
+		{
+		
+			if(vis[x.F]==0) pq.push({x.S,x.F});
+		}
+		
+		
+	}
+	
+	
+	return ans;	
+}
+
+
+int main() {
+  	int m;
+  	cin>>n>>m;
+  	while(m--)
+  	{
+  		int a,b,w;
+  		cin>>a>>b>>w;
+  		ed[a].pb({b,w});
+  		ed[b].pb({a,w});
+	}
+	
+	cout<<prims_mst()<<endl;
+	
+}
