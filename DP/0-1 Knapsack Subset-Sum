@@ -1,0 +1,51 @@
+
+int main()
+{
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+		
+		int n;
+		cin>>n;
+		int a[n+2];
+		ll sum=0;
+		rep(i,n) cin>>a[i],sum+=a[i];
+		if(sum%2==0)
+		{
+			sum/=2;
+			bool dp[n+1][sum+1];
+			//initialisation
+			rep(i,n+1)
+				rep(j,sum+1)
+					{
+						if(i==0) dp[i][j]=false;
+						if(j==0) dp[i][j]=true;
+	
+					}
+			
+			//iteration
+			
+			for(int i=1;i<n+1;i++)
+				for(int j=1;j<sum+1;j++ )
+					{
+						
+						if(a[i-1]<=j)	
+						{
+							dp[i][j]= dp[i-1][j-a[i-1]] || dp[i-1][j];
+						}	
+						else
+						{
+							dp[i][j]=dp[i-1][j];
+						}				
+					}
+			if(dp[n][sum]) cout<<"YES"<<endl;	
+			else cout<<"NO"<<endl;
+		}
+		else
+		{
+			cout<<"NO"<<endl;
+		}
+  
+  }}
+  
