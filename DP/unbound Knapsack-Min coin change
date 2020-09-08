@@ -1,0 +1,84 @@
+//               ()           ()     ()()()()()  ()    ()()()()()         
+//              ()()         ()()        ()      ()    ()                 
+//             ()  ()       ()  ()       ()      ()    ()                 
+//            ()()()()     ()()()()      ()      ()    ()()()()           
+//           ()      ()   ()      ()     ()      ()    ()                 
+//          ()        () ()        ()    ()      ()    ()                 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD  (int)(1e9+7)
+#define SIZE (int)(1e5+5)
+#define all(x) x.begin(),x.end()
+#define  rep(x,y)  for(int x=0;x<y; x++)
+#define vi   vector <int>
+#define lb     lower_bound
+#define ub     upper_bound
+#define  pb     push_back
+#define F      first
+#define S      second
+#define ll     unsigned long long int
+#define pqs  priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>>
+#define fastIO ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define endl "\n"
+typedef pair<int, int> pii;
+
+
+
+int main()
+{
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+		
+		int n,W=0;
+		cin>>W>>n;
+		int wt[n+2];
+		ll sum=0;
+		rep(i,n) cin>>wt[i] ;
+		
+		
+			int dp[n+1][W+1];
+			//initialisation
+			//sort(wt,wt+3);
+				rep(j,W+1)
+					{
+						 dp[0][j]=INT_MAX-1;
+	
+					}
+				rep(j,n+1)
+					{
+						 dp[j][0]=0;
+	
+					}
+				dp[0][0]=INT_MAX-1;
+				for(int j=1;j<n+1;j++)
+					{
+						if(j%wt[0]==0) dp[1][j]=j/wt[0];
+						else dp[1][j]=INT_MAX-1;
+	
+					}
+			//iteration
+			
+			for(int i=1;i<n+1;i++)
+				for(int j=1;j<W+1;j++ )
+					{
+						
+						if(wt[i-1]<=j)	
+						{
+							dp[i][j]=min(  dp[i][j-wt[i-1]] + 1 , dp[i-1][j]);
+						}	
+						else
+						{
+							dp[i][j]=dp[i-1][j];
+						}				
+					}
+					
+			if(dp[n][W]==INT_MAX-1) cout<<"-1"<<endl;
+			else	cout<<dp[n][W]<<endl;
+	
+  }
+  
+  }
+  
