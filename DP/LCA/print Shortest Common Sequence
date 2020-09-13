@@ -1,0 +1,98 @@
+//               ()           ()     ()()()()()  ()    ()()()()()         
+//              ()()         ()()        ()      ()    ()                 
+//             ()  ()       ()  ()       ()      ()    ()                 
+//            ()()()()     ()()()()      ()      ()    ()()()()           
+//           ()      ()   ()      ()     ()      ()    ()                 
+//          ()        () ()        ()    ()      ()    ()                 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD  (int)(1e9+7)
+#define SIZE (int)(1e5+5)
+#define all(x) x.begin(),x.end()
+#define  rep(x,y)  for(int x=0;x<y; x++)
+#define vi   vector <int>
+#define lb     lower_bound
+#define ub     upper_bound
+#define  pb     push_back
+#define F      first
+#define S      second
+#define ll     unsigned long long int
+#define pqs  priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>>
+#define fastIO ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define endl "\n"
+typedef pair<int, int> pii;
+
+int dp[105][105];
+
+string longest_common_subseq(string x,string y,int n,int m)
+{
+	//initialization
+	rep(i,n+1) dp[i][0]=0;
+	rep(j,m+1) dp[0][j]=0;
+	
+	//main code
+	for(int i=1;i<n+1;i++)
+	for(int j=1;j<m+1;j++){
+	if(x[i-1]==y[j-1]) dp[i][j]=1+dp[i-1][j-1];
+	else  dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+	}
+	string s="";
+	int i=n,j=m;
+	while(i>0 && j>0)
+	{
+		if(x[i-1]==y[j-1]) 
+		{
+			s.pb(x[i-1]);
+			i--;
+			j--;
+		}
+		else
+		{
+			if(dp[i-1][j]>dp[i][j-1])
+			{
+				s.pb(x[i-1]);
+				i--;
+			}
+			else s.pb(y[j-1]),j--;
+			
+			
+		}
+		
+	}
+	
+	while(i>0)
+	{
+		s.pb(x[i-1]);
+		i--;
+	}
+	
+	while(j>0)
+	{
+		s.pb(y[j-1]);
+		j--;
+	}
+	
+	reverse(all(s));
+	
+	return s;
+}
+
+
+int main()
+{
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+		int n,m;
+		cin>>n>>m;
+		//memset(dp,-1,sizeof(dp));
+		string x,y;
+		cin>>x>>y;
+		cout<<longest_common_subseq(x,y,n,m)<<endl;;
+		
+	
+  }
+  
+}
