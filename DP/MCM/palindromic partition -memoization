@@ -1,0 +1,67 @@
+//               ()           ()     ()()()()()  ()    ()()()()()         
+//              ()()         ()()        ()      ()    ()                 
+//             ()  ()       ()  ()       ()      ()    ()                 
+//            ()()()()     ()()()()      ()      ()    ()()()()           
+//           ()      ()   ()      ()     ()      ()    ()                 
+//          ()        () ()        ()    ()      ()    ()                 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD  (int)(1e9+7)
+#define SIZE (int)(1e5+5)
+#define all(x) x.begin(),x.end()
+#define  rep(x,y)  for(int x=0;x<y; x++)
+#define vi   vector <int>
+#define lb     lower_bound
+#define ub     upper_bound
+#define  pb     push_back
+#define F      first
+#define S      second
+#define ll     signed long long int
+#define pqs  priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>>
+#define fastIO ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define endl "\n"
+typedef pair<int, int> pii;
+
+int dp[1000][1000];
+bool isPalindrome(string s,int i,int j)
+{
+	
+	while(i<=j)
+	{
+		if(s[i]!=s[j]) return false;
+		i++;
+		j--;
+	}
+	
+	return true;	
+}
+int mcm(string s,int i,int j)
+{
+	if(i>=j) return 0;
+	
+	if(isPalindrome(s,i,j)) return 0;
+	
+	if(dp[i][j]!=-1) return dp[i][j];
+	
+	int mn=INT_MAX;
+	for(int k=i;k<j;k++)
+	{
+		int temp= mcm(s,i,k)+mcm(s,k+1,j)+ 1;
+		mn=min(temp,mn);
+		
+		
+	}
+	return dp[i][j]=mn;
+	
+}
+
+int main()
+{
+	string s;
+	cin>>s;
+	memset(dp,-1,sizeof(dp));
+	
+  	
+  	cout<<mcm(s,0,s.length()-1)<<endl;
+}
