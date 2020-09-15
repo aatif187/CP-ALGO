@@ -40,10 +40,10 @@ int mcm(string s,int i,int j)
 {
 	if(i>=j) return 0;
 	
-	if(isPalindrome(s,i,j)) return 0;
+	
 	
 	if(dp[i][j]!=-1) return dp[i][j];
-	
+	if(isPalindrome(s,i,j)) return 0;
 	int mn=INT_MAX;
 	for(int k=i;k<j;k++)
 	{
