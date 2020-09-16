@@ -1,0 +1,18 @@
+
+int solve(Node* node, int &res)
+{
+    if(node==NULL) return 0;
+    int l= solve(node->left ,res);
+    int r= solve(node->right, res);
+    int temp= max(l,r) +1;
+    int ans= max(1+l+r, temp);
+    res=max(res,ans);
+    return temp;
+}
+/* Computes the diameter of binary tree with given root.  */
+int diameter(Node* node) {
+    // Your code here
+    int res=INT_MIN;
+     solve(node, res);
+     return res;
+}
