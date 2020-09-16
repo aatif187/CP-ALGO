@@ -1,0 +1,74 @@
+//               ()           ()     ()()()()()  ()    ()()()()()         
+//              ()()         ()()        ()      ()    ()                 
+//             ()  ()       ()  ()       ()      ()    ()                 
+//            ()()()()     ()()()()      ()      ()    ()()()()           
+//           ()      ()   ()      ()     ()      ()    ()                 
+//          ()        () ()        ()    ()      ()    ()                 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD  (int)(1e9+7)
+#define SIZE (int)(1e5+5)
+#define all(x) x.begin(),x.end()
+#define  rep(x,y)  for(int x=0;x<y; x++)
+#define vi   vector <int>
+#define lb     lower_bound
+#define ub     upper_bound
+#define  pb     push_back
+#define F      first
+#define S      second
+#define ll     signed long long int
+#define pqs  priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>>
+#define fastIO ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define endl "\n"
+typedef pair<int, int> pii;
+
+int dp[11][51];
+bool isPalindrome(string s,int i,int j)
+{
+	
+	while(i<=j)
+	{
+		if(s[i]!=s[j]) return false;
+		i++;
+		j--;
+	}
+	
+	return true;	
+}
+int mcm(int e,int f)
+{
+	if(f==0 ||f==1) return f;
+	if(e==1) return f;
+	if(dp[e][f]!=-1) return dp[e][f];
+	
+	int mn=INT_MAX;
+	for(int k=1;k<=f;k++)
+	{
+		int low,high;
+		if(dp[e-1][k-1]!=-1) low=dp[e-1][k-1];
+		else low=mcm(e-1,k-1);
+		
+		if(dp[e][f-k]!=-1) high=dp[e][f-k];
+		else high=mcm(e,f-k);
+		
+		int temp= max(low,high) +1;
+		mn=min(mn,temp);
+		
+		
+	}
+	return dp[e][f]=mn;
+	
+}
+
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--){
+	memset(dp,-1,sizeof(dp));
+	int n,k;
+	cin>>n>>k;
+	cout<<mcm(n,k)<<endl;
+	}
+}
