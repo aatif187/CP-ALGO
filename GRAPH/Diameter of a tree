@@ -1,0 +1,60 @@
+//               ()           ()     ()()()()()  ()    ()()()()()         
+//              ()()         ()()        ()      ()    ()                 
+//             ()  ()       ()  ()       ()      ()    ()                 
+//            ()()()()     ()()()()      ()      ()    ()()()()           
+//           ()      ()   ()      ()     ()      ()    ()                 
+//          ()        () ()        ()    ()      ()    ()                 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD  (int)(1e9+7)
+#define SIZE (int)(1e5+5)
+#define all(x) x.begin(),x.end()
+#define  rep(x,y)  for(int x=0;x<y; x++)
+#define vi   vector <int>
+#define lb     lower_bound
+#define ub     upper_bound
+#define  pb     push_back
+#define F      first
+#define S      second
+#define ll     unsigned long long int
+#define pqs  priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>>
+#define fastIO ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define endl "\n"
+typedef pair<int, int> pii;
+
+vi ed[200002];
+vi v;
+int par;
+int farthest_node;
+int max_dist;
+
+void dfs(int src, int par, int dist=0)
+{
+	
+	for(auto child: ed[src])
+	{
+		if(child!=par) dfs(child, src, dist+1);
+	}
+	
+	v.pb(dist);
+}
+
+int main()
+{
+	int n;
+	cin>>n;
+	rep(i,n-1)
+	{
+		int a,b;
+		cin>>a>>b;
+		ed[a].pb(b);
+		ed[b].pb(a);
+	}
+	
+	dfs(1,0);
+	
+	for(auto el : v)
+		cout<<el<<" ";
+		cout<<endl;
+}
