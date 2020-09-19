@@ -1,0 +1,63 @@
+//               ()           ()     ()()()()()  ()    ()()()()()         
+//              ()()         ()()        ()      ()    ()                 
+//             ()  ()       ()  ()       ()      ()    ()                 
+//            ()()()()     ()()()()      ()      ()    ()()()()           
+//           ()      ()   ()      ()     ()      ()    ()                 
+//          ()        () ()        ()    ()      ()    ()                 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD  (int)(1e9+7)
+#define SIZE (int)(1e5+5)
+#define all(x) x.begin(),x.end()
+#define  rep(x,y)  for(int x=0;x<y; x++)
+#define vi   vector <int>
+#define lb     lower_bound
+#define ub     upper_bound
+#define  pb     push_back
+#define F      first
+#define S      second
+#define ll      long long int
+#define pqs  priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>>
+#define fastIO ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define endl "\n"
+typedef pair<int, int> pii;
+
+int dp[4004];
+
+//TOP DOWN DP
+int stair_case_prob(int n,int a,int b,int c)
+{
+	if(n==0) return 0;
+	if(n<0)  return INT_MIN;
+	if(dp[n]!=-1) return dp[n];
+	return max(stair_case_prob(n-a,a,b,c),max(stair_case_prob(n-b,a,b,c),stair_case_prob(n-c,a,b,c)))+1;
+}
+
+//BOTTOM UP DP
+
+ll stair_case_prob_BottomUp(ll n,ll a,ll b,ll c)
+{
+	if(n==0) dp[0]=0;
+	
+	for(int i=1;i<=n;i++){
+		ll r1=INT_MIN;
+		ll r2=INT_MIN;
+		ll r3=INT_MIN;
+		if(i>=a) r1=dp[i-a];
+		if(i>=b) r2=dp[i-b];
+		if(i>=c) r3=dp[i-c];
+		
+		dp[i]=max(r1,max(r2,r3))+1;
+	}
+	return dp[n];
+}
+
+int main()
+{
+	ll n,a,b,c;
+	cin>>n>>a>>b>>c;
+	//memset(dp,-1,sizeof(dp));
+	cout<<stair_case_prob_BottomUp(n,a,b,c)<<endl;
+	
+}
