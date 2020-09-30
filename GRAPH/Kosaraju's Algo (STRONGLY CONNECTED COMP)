@@ -1,0 +1,110 @@
+//               ()           ()     ()()()()()  ()    ()()()()()         
+//              ()()         ()()        ()      ()    ()                 
+//             ()  ()       ()  ()       ()      ()    ()                 
+//            ()()()()     ()()()()      ()      ()    ()()()()           
+//           ()      ()   ()      ()     ()      ()    ()                 
+//          ()        () ()        ()    ()      ()    ()                 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD  (int)(1e9+7)
+#define SIZE (int)(1e5+5)
+#define all(x) x.begin(),x.end()
+#define  rep(x,y)  for(int x=0;x<y; x++)
+#define  repi(x,y)  for(int x=1;x<=y; x++)
+#define vi   vector <int>
+#define lb     lower_bound
+#define ub     upper_bound
+#define  pb     push_back
+#define F      first
+#define S      second
+#define ll      signed long long int
+#define pqs  priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>>
+#define fastIO ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define endl "\n"
+#define pp(x)  cout<<x<<endl;
+typedef pair<int, int> pii;
+
+int64_t ceil_div(int64_t a, int64_t b) {
+    return (a + b - 1) / b;
+}
+
+vi ed[1000001];
+vi tr[1000001];
+vi order;
+vi scc;
+bool vis[1000001];
+
+void dfs(int node){
+	vis[node]=1;
+	for(auto child: ed[node])
+	{
+		if(vis[child]==0) dfs(child);
+	}
+	order.pb(node);
+}
+
+void dfs2(int node){
+	vis[node]=1;
+	for(auto child: tr[node])
+	{
+		if(vis[child]==0) dfs2(child);
+	}
+	scc.pb(node);
+}
+
+void run_case() {
+	int n,m;
+	cin>>n,m;
+	rep(i,n)
+	{
+		ed[i].clear();
+		tr[i].clear();
+		vis[i]=0;
+	}
+	rep(i,m)
+	{
+		int a,b;
+		cin>>a>>b;
+		ed[a].pb(b);
+		tr[b].pb(a);
+	}
+	order.clear();
+	rep(i,n)
+	{
+		if(vis[i]==0) dfs(i);
+	}
+	rep(i,n)
+	{
+		vis[i]=0;
+	}
+	reverse(all(order));
+
+	for(auto i: order)
+	{
+		if(vis[i]==0){
+			scc.clear();
+			dfs2(i);
+			
+			//element of one strongly connected compound
+			for(auto el: scc)
+			{
+				cout<<el<<" ";
+			}
+			cout<<endl;
+			
+		}
+	}
+
+}
+
+
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		run_case();
+	}
+}
