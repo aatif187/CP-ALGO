@@ -1,0 +1,329 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//node data type
+class node{
+	public:
+	int data;
+	node * next;
+	node * prev;
+};
+
+//head
+node *head=NULL,*tail=NULL;
+
+//DISPLAY
+
+void Display(){
+	node *temp;
+	temp=head;
+	cout<<"THE COMPLETE DATA LIST"<<endl;
+	do{
+		cout<<temp->data<<" ";
+		temp=temp->next;
+	}while(temp!=tail->next);
+	cout<<endl;
+}
+//ENTER function
+void EnterDataAtSTART();
+void EnterDataAtEND();
+void EnterDataAtAnyPOSITION();
+void EnterData(){
+	cout<<"ENTER DATA FUNCTION"<<endl;
+	int exit=1;
+
+	while(exit){
+	cout<<"----ENTER DATA---\n1.At Start\n2.AtEnd\n3.At any position\n4.Exit\n"<<endl;
+	cout<<"CHOICE: ";
+	int choice;
+	cin>>choice;
+	switch(choice){
+		case 1:{
+			EnterDataAtSTART();
+			break;
+		}
+		case 2:{
+			EnterDataAtEND();
+			break;
+		}
+		case 3:{
+			EnterDataAtAnyPOSITION();
+			break;
+		}
+		case 4:{
+			exit=0;
+			break;
+		}
+	}
+	
+	}
+}
+
+void EnterDataAtSTART(){
+	cout<<"Enter Element: ";
+	int elem;
+	cin>>elem;
+	node *newNode= new node;
+	newNode->data=elem;
+	newNode->next=newNode;
+	newNode->prev=newNode;
+
+	
+	if(head==NULL){
+		head=newNode;	
+		tail=newNode;
+	}
+	else
+	{	
+    	newNode->next=head;
+    	head->prev=newNode;
+    	newNode->prev=tail;
+    	tail->next=newNode;
+    	head=newNode;    	
+	}
+	Display();
+	
+}
+void EnterDataAtEND(){
+	cout<<"Enter Element: ";
+	int elem;
+	cin>>elem;
+	node *newNode= new node;
+	newNode->data=elem;
+	newNode->next=newNode;
+	newNode->prev=newNode;
+
+	
+	if(head==NULL){
+		head=newNode;
+		tail=newNode;
+	}
+	else
+	{	
+		
+		newNode->prev=tail;
+		newNode->next=head;
+		tail->next=newNode;
+		head->prev=newNode;
+		tail=newNode;
+	}
+	Display();
+}
+
+void EnterDataAtAnyPOSITION(){
+	cout<<"Enter POsition: ";
+	int pos;
+	cin>>pos;
+	if(pos==1){
+		EnterDataAtSTART();
+	}
+
+	else
+	{	
+		cout<<"Enter Element: ";
+		int elem;
+		cin>>elem;
+		node *newNode= new node;
+		newNode->data=elem;
+		newNode->next=newNode;
+		newNode->prev=newNode;
+	    
+		int i=2;
+		node *temp;
+		temp=head;
+		while(i<pos)
+		{
+			if(temp==tail){
+				cout<<"Invalid Position"<<endl;
+				return;
+			}
+			i++;
+			temp=temp->next;
+		}   
+		if(temp==tail){
+		
+			newNode->prev=temp;
+			newNode->next=head;
+			temp->next=newNode;
+			head->prev=newNode;
+			tail=newNode;
+		}
+		else{
+			newNode->prev=temp;
+			newNode->next=temp->next;
+			temp->next->prev=newNode;
+			temp->next=newNode;
+		}	
+	}
+	Display();
+	
+}
+
+//DELETE FUNCTION
+void DELETEDataFromSTART();
+void DELETEDataFromEND();
+void DELETEDataFromAnyPOSITION();
+void DeleteData(){
+	cout<<"DELETE DATA"<<endl;
+	int exit=1;
+
+	while(exit){
+	cout<<"----DELETE DATA---\n1.from Start\n2.from End\n3.from any position\n4.Exit\n"<<endl;
+	cout<<"CHOICE: ";
+	int choice;
+	cin>>choice;
+	switch(choice){
+		case 1:{
+			DELETEDataFromSTART();
+			break;
+		}
+		case 2:{
+			DELETEDataFromEND();
+			break;
+		}
+		case 3:{
+			DELETEDataFromAnyPOSITION();
+			break;
+		}
+		case 4:{
+			exit=0;
+			break;
+		}
+	}
+	
+	}
+	
+}
+
+void DELETEDataFromSTART(){
+	node *temp;
+	temp=head;
+	head=head->next;
+	head->prev=tail;
+	tail->next=head;
+	if(head==NULL) {
+		cout<<"DCLL EMPTY"<<endl;
+		return;
+	}
+	delete temp;
+	Display();
+}
+
+void DELETEDataFromEND(){
+	node *temp;
+	
+	if(head==NULL) {
+		cout<<"DCLL EMPTY"<<endl;
+		return;
+	}
+	temp=tail;
+	tail=tail->prev;
+	tail->next=head;
+	head->prev=tail;
+	delete temp;
+	Display();	
+}
+
+void DELETEDataFromAnyPOSITION(){
+	cout<<"Enter Position: ";
+	int pos;
+	cin>>pos;
+	if(pos==1){
+		DELETEDataFromSTART();
+	}
+	else{
+	int x=2;
+	node *temp=head;
+	 while(x<pos){
+	 	if(temp==tail){
+	 		cout<<"INVALID POSITION"<<endl;
+	 		return;
+		 }
+		 x++;
+		 temp=temp->next;
+	 }
+	 if(temp==tail){
+	 		cout<<"INVALID POSITION"<<endl;
+	 		return;
+	  }
+	 else{
+	 node * tempD=temp->next;
+	 temp->next= tempD->next;
+	 tempD->next->prev=temp;
+	 delete tempD;
+	 }
+	 }
+	 Display();
+}
+
+//FIND THE LENGTH
+int FindLengthofLL(){
+	node *temp=head;
+	int count=0;
+	do{
+		temp=temp->next;
+		count++;
+	}while(temp!=head);
+	cout<<"Length of DCLL is "<<count<<endl;
+	return count;
+}
+
+////REVERSE THE DCLL
+//void ReverseLL(){
+//	if(head==NULL) {
+//		//null
+//	}
+//	node * curr, *forw;
+//	curr=head;
+//
+//	while(curr!=NULL){
+//		forw=curr->next;
+//		curr->next=curr->prev;
+//		curr->prev= forw;
+//		curr= forw;	
+//	}
+//	curr=head;
+//	head=tail;
+//	tail=curr;
+//	Display();
+//	
+//	
+//}
+int main(){
+	cout<<"DOUBLY CIRCULAR LINKED LIST"<<endl;
+	int exit=1;
+
+	while(exit){
+	cout<<"----MENU----\n1.ENTER DATA\n2.DELETE DATA\n3.DISPLAY\n4.REVERSE THE DCLL\n5.FIND LENGTH OF DCLL\n6.Exit\n\n"<<endl;
+	cout<<"CHOICE: ";
+	int choice;
+	cin>>choice;
+	switch(choice){
+		case 1:{
+			EnterData();
+			break;
+		}
+		case 2:{
+			DeleteData();
+			break;
+		}
+		case 3:{
+			Display();
+			break;
+		}
+		case 4:{
+			//ReverseLL();
+			break;
+		}
+		case 5:{
+			FindLengthofLL();
+			break;
+		}
+		case 6:{
+			exit=0;
+			break;
+		}
+	}
+	
+	}
+}
