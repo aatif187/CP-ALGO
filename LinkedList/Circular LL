@@ -1,0 +1,323 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//node data type
+class node{
+	public:
+	int data;
+	node * next;
+};
+
+//head
+node *tail=NULL;
+
+//DISPLAY
+
+void Display(){
+	node *temp;
+	temp=tail->next;
+	cout<<"THE COMPLETE DATA LIST"<<endl;
+	while(temp!=tail){
+		cout<<temp->data<<" ";
+		temp=temp->next;
+	}
+	cout<<temp->data<<endl;
+}
+//ENTER function
+void EnterDataAtSTART();
+void EnterDataAtEND();
+void EnterDataAtAnyPOSITION();
+void EnterData(){
+	cout<<"ENTER DATA FUNCTION"<<endl;
+	int exit=1;
+
+	while(exit){
+	cout<<"----ENTER DATA---\n1.At Start\n2.AtEnd\n3.At any position\n4.Exit\n"<<endl;
+	cout<<"CHOICE: ";
+	int choice;
+	cin>>choice;
+	switch(choice){
+		case 1:{
+			EnterDataAtSTART();
+			break;
+		}
+		case 2:{
+			EnterDataAtEND();
+			break;
+		}
+		case 3:{
+			EnterDataAtAnyPOSITION();
+			break;
+		}
+		case 4:{
+			exit=0;
+			break;
+		}
+	}
+	
+	}
+}
+
+void EnterDataAtSTART(){
+	cout<<"Enter Element: ";
+	int elem;
+	cin>>elem;
+	node *newNode= new node;
+	newNode->data=elem;
+	newNode->next=NULL;
+	
+	if(tail==NULL){
+		tail=newNode;
+		tail->next=newNode;
+	}
+	else
+	{	
+    	newNode->next=tail->next;
+    	tail->next=newNode;    	
+	}
+	Display();
+	
+}
+void EnterDataAtEND(){
+	cout<<"Enter Element: ";
+	int elem;
+	cin>>elem;
+	node *newNode= new node;
+	newNode->data=elem;
+	newNode->next=NULL;
+
+	
+	if(tail==NULL){
+		tail=newNode;
+		tail->next=newNode;
+	}
+	else
+	{	
+		
+		newNode->next=tail->next;
+		tail->next=newNode;
+		tail=newNode;
+	}
+	Display();
+}
+
+void EnterDataAtAnyPOSITION(){
+	cout<<"Enter POsition: ";
+	int pos;
+	cin>>pos;
+	if(pos==1){
+		EnterDataAtSTART();
+	}
+
+	else
+	{	
+		cout<<"Enter Element: ";
+		int elem;
+		cin>>elem;
+		node *newNode= new node;
+		newNode->data=elem;
+		newNode->next=NULL;
+	    
+		int i=2;
+		node *temp;
+		temp=tail->next;
+		while(i<pos)
+		{
+			if(temp->next==tail->next){
+				cout<<"Invalid Position"<<endl;
+				return;
+			}
+			i++;
+			temp=temp->next;
+		}   
+		if(temp->next==tail->next){
+			
+			newNode->next=tail->next;
+			tail->next=newNode;
+			tail=newNode;
+		
+		}
+		else{
+			
+			newNode->next=temp->next;
+			temp->next=newNode;
+		}	
+	}
+	Display();
+	
+}
+
+
+//DELETE FUNCTION
+void DELETEDataFromSTART();
+void DELETEDataFromEND();
+void DELETEDataFromAnyPOSITION();
+void DeleteData(){
+	cout<<"DELETE DATA"<<endl;
+	int exit=1;
+
+	while(exit){
+	cout<<"----DELETE DATA---\n1.from Start\n2.from End\n3.from any position\n4.Exit\n"<<endl;
+	cout<<"CHOICE: ";
+	int choice;
+	cin>>choice;
+	switch(choice){
+		case 1:{
+			DELETEDataFromSTART();
+			break;
+		}
+		case 2:{
+			DELETEDataFromEND();
+			break;
+		}
+		case 3:{
+			DELETEDataFromAnyPOSITION();
+			break;
+		}
+		case 4:{
+			exit=0;
+			break;
+		}
+	}
+	
+	}
+	
+}
+
+void DELETEDataFromSTART(){
+	node *temp;
+	temp=tail->next;
+	tail->next=temp->next;
+	
+	if(tail==NULL) {
+		cout<<"CLL EMPTY"<<endl;
+		return;
+	}
+	delete temp;
+	Display();
+}
+
+void DELETEDataFromEND(){
+	node *temp;
+	
+	if(tail==NULL) {
+		cout<<"CLL EMPTY"<<endl;
+		return;
+	}
+	temp=tail->next;
+	while(temp->next!=tail){
+		temp=temp->next;
+	}
+	node* tempD=tail;
+	temp->next= tail->next;
+	tail=temp;
+	delete tempD;
+	Display();	
+}
+
+void DELETEDataFromAnyPOSITION(){
+	cout<<"Enter Position: ";
+	int pos;
+	cin>>pos;
+	if(pos==1){
+		DELETEDataFromSTART();
+	}
+	else{
+	int x=2;
+	node *temp=tail->next;
+	 while(x<pos){
+	 	if(temp->next==tail){
+	 		cout<<"INVALID POSITION"<<endl;
+	 		return;
+		 }
+		 x++;
+		 temp=temp->next;
+	 }
+	 if(temp->next==tail){
+	 		cout<<"INVALID POSITION"<<endl;
+	 		return;
+	  }
+	 else{
+	 node * tempD=temp->next;
+	 temp->next= tempD->next;
+	 delete tempD;
+	 }
+	 }
+	 Display();
+}
+
+//FIND THE LENGTH
+int FindLengthofLL(){
+	node *temp=tail->next;
+	int count=0;
+	do{
+		temp=temp->next;
+		count++;
+	}while(temp!=tail->next);
+
+	cout<<"Length of CLL is "<<count<<endl;
+	return count;
+}
+
+//REVERSE THE CLL
+void ReverseLL(){
+	if(tail==NULL) {
+		//null
+	}
+	node * curr, *forw, * prev ;
+	
+	curr=tail->next;
+	forw= curr->next;
+	
+
+	while(curr!=tail){
+		prev=curr;
+		curr=forw;
+		forw=curr->next;
+		curr->next= prev;	
+	}
+	forw->next=tail;
+	tail=forw;
+	
+	Display();
+	
+	
+}
+int main(){
+	cout<<"CIRCULAR LINKED LIST"<<endl;
+	int exit=1;
+
+	while(exit){
+	cout<<"----MENU----\n1.ENTER DATA\n2.DELETE DATA\n3.DISPLAY\n4.REVERSE THE CLL\n5.FIND LENGTH OF CLL\n6.Exit\n\n"<<endl;
+	cout<<"CHOICE: ";
+	int choice;
+	cin>>choice;
+	switch(choice){
+		case 1:{
+			EnterData();
+			break;
+		}
+		case 2:{
+			DeleteData();
+			break;
+		}
+		case 3:{
+			Display();
+			break;
+		}
+		case 4:{
+			ReverseLL();
+			break;
+		}
+		case 5:{
+			FindLengthofLL();
+			break;
+		}
+		case 6:{
+			exit=0;
+			break;
+		}
+	}
+	
+	}
+}
