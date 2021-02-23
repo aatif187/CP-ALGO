@@ -1,0 +1,13 @@
+
+int dfs(int node){
+	vis[node]=1;
+	int curr_size=1;
+	
+	for(auto ch:ed[node]){
+		if(!vis[ch]){
+			curr_size+=	dfs(ch);
+		}
+	}
+	subSize[node]=curr_size;
+	return curr_size;
+}
