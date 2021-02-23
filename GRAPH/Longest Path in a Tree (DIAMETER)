@@ -1,0 +1,48 @@
+ 
+ 
+vector<int>v[10002];
+int vis[10002];
+ll maxd,maxnode;
+ 
+void dfs(int node,int dis){
+	
+	vis[node]=1;
+	if(dis>maxd)
+		maxd=dis,maxnode=node;
+	for(int child:v[node]){
+		if(vis[child]==0)
+		{
+			dfs(child,dis+1);	
+		}
+			
+	}
+}
+ 
+ 
+int main()
+{
+    int t;
+    cin>>t;
+    rep(l,t-1){
+    	int x,y;
+    	cin>>x>>y;
+    	v[x].pb(y);
+    	v[y].pb(x);
+	}
+	maxd=-1;
+	dfs(1,0);
+	rep(i,t)
+		{
+			vis[i]=0;
+		}
+	maxd=-1;
+//		cout<<end<<endl;
+	dfs(maxnode,0);
+	cout<<maxd<<endl;
+//	rep(j,t)
+//	{
+//		vis[j]=0;
+//		v[j].clear();
+//	}
+ 
+}
