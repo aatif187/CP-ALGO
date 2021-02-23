@@ -1,0 +1,70 @@
+
+int vis[10001];
+int dis[1001];
+class graph{
+	
+	map<int,list<int>>v;
+	
+	public:
+		void addedge(int x,int y){
+			v[x].pb(y);
+			v[y].pb(x);
+		}
+		
+		
+		void dfs(int src,int dist){
+			vis[src]=1;
+			dis[src]=dist;
+			for(auto i: v[src]){
+				if(vis[i]==0){
+					dfs(i,dist+1);
+				}
+					
+			}
+			
+		}
+	
+ 
+			
+			
+};
+ 
+ 
+ 
+ 
+int main()
+{
+    graph g;
+    int n;
+    cin>>n;
+    for(int i=1;i<n;i++){
+    	int x,y;
+    	cin>>x>>y;
+    	g.addedge(x,y);
+	}
+	
+	g.dfs(1,0);
+	
+	int q;
+	cin>>q;
+	int ans=0;
+	int min_dis=MOD;
+	
+	
+	while(q--){
+		int gf;
+		cin>>gf;
+		if(dis[gf]<min_dis){
+			min_dis=dis[gf]; 
+			ans=gf;
+		}
+		else if(dis[gf]==min_dis && gf<ans){
+			ans=gf;	
+			}
+			
+		}
+    cout<<ans<<endl;
+    
+}
+	
+	
