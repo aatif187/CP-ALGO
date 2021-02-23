@@ -1,0 +1,13 @@
+
+bool dfs(int node, int timer){
+	vis[node]=1;
+	in[node]=timer;
+	timer++;
+	for(auto ch:ed[node]){
+		if(!vis[ch]){
+			dfs(ch,timer);
+		}
+	}
+	out[node]=timer;
+	timer++;
+}
