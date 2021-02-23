@@ -1,0 +1,14 @@
+
+bool dfs(int node, int par){
+	vis[node]=1;
+	
+	for(auto ch:ed[node]){
+		if(!vis[ch]){
+			if(dfs(ch,node)) return true;
+		}
+		else{
+			if(ch!=par) return true;
+		}
+	}
+	return false;
+}
