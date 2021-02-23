@@ -1,0 +1,23 @@
+void bfs(int src){
+	vis[src]=1;
+	dis[src]=0;
+	queue<int>q;
+	q.push(src);
+	
+	while(!q.empty()){	
+		int curr=q.front();
+		q.pop();
+		for(auto child : v[curr]){
+			if(vis[child]==0){
+				q.push(child);
+				dis[child]=dis[curr]+1;
+				vis[child]=1;
+			}
+			
+		}
+		
+		
+	}
+	
+	
+}
