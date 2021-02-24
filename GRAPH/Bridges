@@ -1,0 +1,26 @@
+
+void dfs(int node, int par)
+{
+	vis[node]=1;
+	in[node]=low[node]=timer++;
+	for(auto child: edge[node])
+	{
+		
+		if(child==par) continue;
+		
+		if(vis[child]==1)
+		{
+			low[node]=min(low[node],in[child]);
+			
+		}
+		else
+		{
+			dfs(child,node);
+			if(in[node]<low[child]){
+				cout<<node<<"-"<<child<<" is a bridge"<<endl;
+			}
+			low[node]=min(low[node],low[child]);
+		}
+		
+	}
+}
