@@ -1,0 +1,210 @@
+//               ()           ()     ()()()()()  ()    ()()()()()         
+//              ()()         ()()        ()      ()    ()                 
+//             ()  ()       ()  ()       ()      ()    ()                 
+//            ()()()()     ()()()()      ()      ()    ()()()()           
+//           ()      ()   ()      ()     ()      ()    ()                 
+//          ()        () ()        ()    ()      ()    ()                 
+ 
+#include <bits/stdc++.h>
+using namespace std;
+#define MOD  (int)(1e9+7)
+#define SIZE (int)(1e5+5)
+#define all(x) x.begin(),x.end()
+#define  rep(x,y)  for(int x=0;x<y; x++)
+#define  repi(x,y)  for(int x=1;x<=y; x++)
+#define vi   vector <int>
+#define lb     lower_bound
+#define ub     upper_bound
+#define  pb     push_back
+#define F      first
+#define S      second
+#define ll      unsigned long long int
+#define sll     signed long long 
+#define pqs  priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>>
+#define fastIO ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define endl "\n"
+#define pp(x)  cout<<x<<endl;
+#define cc(n) ll n; cin>>n;
+#define cc2(x,y) ll x,y; cin>>x>>y;
+#define cc3(a,b,c) ll a,b,c; cin>>a>>b>>c;
+typedef pair<int, int> pii;
+ 
+int ceil_div(int a, int b) {
+    return (a + b - 1) / b;
+}
+ 
+int64_t fact(int64_t n) 
+{ 
+    return (n==1 || n==0) ? 1: n%MOD * fact(n - 1)%MOD;  
+} 
+bool isPrime(int n) 
+{ 
+    // Corner cases 
+    if (n <= 1) 
+        return false; 
+    if (n <= 3) 
+        return true; 
+  
+    // This is checked so that we can skip 
+    // middle five numbers in below loop 
+    if (n % 2 == 0 || n % 3 == 0) 
+        return false; 
+  
+    for (int i = 5; i * i <= n; i = i + 6) 
+        if (n % i == 0 || n % (i + 2) == 0) 
+            return false; 
+  
+    return true; 
+} 
+  
+// Function to print primes 
+vector<int> prime;
+void printPrime(int n) 
+{ 
+prime.pb(1);
+    for (int i = 2; i <= n; i++) { 
+        if (isPrime(i)) 
+            prime.pb(i); 
+    } 
+} 
+
+int find_x(int nn){
+	ll cc=0;
+	while(nn>0 && nn%2==0){
+		cc++;
+		nn/=2;
+	}
+	return cc;
+}
+
+bool check(int num,int fav){
+	
+	for(int i=1;i<=10;i++){
+			int mult=fav*i;
+			int last= mult%10;
+			if(last==(num%10) && num>=mult)
+					return true;
+	}
+	return false;}
+//}
+//ll power(ll x, 
+//                                      ll y, int p)
+//    {
+//        unsigned long long res = 1; // Initialize result
+//     
+//        x = x % p; // Update x if it is more than or
+//        // equal to p
+//     
+//        while (y > 0) 
+//        {
+//         
+//            // If y is odd, multiply x with result
+//            if (y & 1)
+//                res = (res * x) % p;
+//     
+//            // y must be even now
+//            y = y >> 1; // y = y/2
+//            x = (x * x) % p;
+//        }
+//        return res;
+//    }
+int64_t power(int64_t base,int exp)
+{
+    if (exp == 0) return 1;
+    if (exp == 1) return base;
+    
+    int64_t t = power(base, exp / 2);
+    t = (t * t);
+    if (exp % 2 == 0)
+     return t;
+    else
+     return (base * t);
+}
+// int modInverse(unsigned long long n,  
+//                                                int p)
+//    {
+//        return power(n, p - 2, p);
+//    }
+//int nCrModPFermat(unsigned long long n,
+//                                     int r, int p)
+//    {
+//        // If n<r, then nCr should return 0
+//        if (n < r)
+//            return 0;
+//        // Base case
+//        if (r == 0)
+//            return 1;
+//     
+//        // Fill factorial array so that we
+//        // can find all factorial of r, n
+//        // and n-r
+//        unsigned long long fac[n + 1];
+//        fac[0] = 1;
+//        for (int i = 1; i <= n; i++)
+//            fac[i] = (fac[i - 1] * i) % p;
+//     
+//        return (fac[n] * modInverse(fac[r], p) % p
+//                * modInverse(fac[n - r], p) % p)
+//               % p;
+//    }
+int vis[100][100];
+int dist[100][100];
+int dx[]= {-1,1,2,2,1,-1,-2,-2};
+int dy[]= {-2,-2,-1,1,2,2,1,-1};
+bool valid(int x,int y){
+	if(x<0 || x>7 || y<0 ||y>7 ||vis[x][y]==1) return false;
+	return true;
+}
+void bfs(int x,int y){
+	vis[x][y]=1;
+	dist[x][y]=0;
+	queue<pii>q;
+	q.push({x,y});
+	while(!q.empty()){
+		int cx=q.front().F;
+		int cy= q.front().S;
+		q.pop();
+		
+		for(int i=0;i<8;i++){
+			if(valid(cx+dx[i],cy+dy[i])){
+				//cout<<cx+dx[i]<<cy+dy[i]<<endl;
+				q.push({cx+dx[i],cy+dy[i]});
+				vis[cx+dx[i]][cy+dy[i]]=1;
+				dist[cx+dx[i]][cy+dy[i]]=dist[cx][cy]+1;
+			}
+		}
+	}
+}
+void run_case() {
+	cc(n);
+	while(n--){
+		string s,e;
+		int sx,sy,ex,ey;
+		cin>>s>>e;
+		sx=s[0]-'a';
+		sy=s[1]-'1';
+		ex=e[0]-'a';
+		ey=e[1]-'1';
+		rep(i,10){
+			rep(j,10){
+				vis[i][j]=0;
+				dist[i][j]=0;
+			}
+		}
+		//cout<<sx<<sy<<" "<<ex<<ey<<endl;
+		bfs(sx,sy);
+		cout<<dist[ex][ey]<<endl;
+	}
+}
+ 
+int main()
+{
+	int t=1;
+	//cin>>t;
+	
+	while(t--)
+	{
+	 run_case();
+	 //res==1?cout<<"YES"<<endl:cout<<"NO"<<endl;
+	}
+}
