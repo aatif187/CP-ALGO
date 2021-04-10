@@ -1,0 +1,77 @@
+int depth = 0;
+int nodeNumbersExceptlast = 0;
+int countNodes(TreeNode *root)
+{
+
+    if (!root)
+        return 0;
+    depth = CountDepth(root);
+    if (depth == 0)
+        return 1;
+    nodeNumbersExceptlast = pow(2, depth) - 1;
+    int lastNodes = last(root);
+    return lastNodes + nodeNumbersExceptlast;
+}
+int last(TreeNode *root)
+{
+    int l = 1;
+    int r = nodeNumbersExceptlast + 1;
+    int mid;
+    while (l < r)
+    {
+        mid = l + (r - l) / 2;
+        if (exists(root, mid))
+            l = mid + 1;
+        else
+            r = mid;
+    }
+    return l;
+}
+bool exists(TreeNode *root, int val)
+{
+    int l = 0;
+    int r = nodeNumbersExceptlast;
+    int mid;
+    for (int i = l; i < depth; i++)
+    {
+        int mid = l + (r - l) / 2;
+        if (val <= mid)
+            r = mid, root = root->left;
+        else
+            l = mid + 1, root = root->right;
+    }
+    return root != NULL;
+}
+int CountDepth(TreeNode *root)
+{
+    int d = 0;
+    while (root->left)
+    {
+        d++;
+        root = root->left;
+    }
+    //cout << "depth: " << d << endl;
+    return d;
+}
+    //go(root);
+   // return 1+ countNodes(root->left)+ countNodes(root->right);
+// void go(TreeNode *root)
+// {
+//     queue<TreeNode *> q;
+//     q.push(root);
+    
+//         while(!q.empty()){
+//             auto qt = q.front();
+//             q.pop();
+//             if(qt->left) {
+//                 ans++;
+//                 q.push(qt->left);
+//             }
+//             if (qt->right)
+//             {
+//                 ans++;
+//                 q.push(qt->right);
+//             }
+//     }
+// }
+};
