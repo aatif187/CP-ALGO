@@ -1,5 +1,6 @@
 int parent [100002];
 
+
 int find(int a)
 {
 	if(parent[a]==a){
