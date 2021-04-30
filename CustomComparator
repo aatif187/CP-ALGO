@@ -1,0 +1,43 @@
+class comp
+{
+public:
+    #define pii pair<int,string>
+    bool operator() (pii a,pii b)
+    {
+       if(a.first==b.first){
+           int i=0;
+           while(i<a.second.length() && i<b.second.length() && a.second[i]==b.second[i])i++;
+            return a.second[i]<b.second[i];
+       }
+        return a.first>b.first;
+    }
+};
+
+class Solution {
+public:
+    #define pii pair<int,string>
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        priority_queue<pii,vector<pii>,comp>pq;
+        map<string,int>m;
+        vector<string>ans;
+        for(auto i: words){
+            m[i]++;
+        }
+        for(auto i: m){
+            pq.push({i.second,i.first});
+            if(pq.size()>k)pq.pop();
+        }
+        while(!pq.empty()){
+            ans.push_back(pq.top().second);
+            pq.pop();
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+    // bool comp(pii a,pii b){
+    //     if(a.first==b.first) return a.second[0]<b.second[0];
+    //     return a.first<b.first;
+    // }
+};
+
+
