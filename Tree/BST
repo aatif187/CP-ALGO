@@ -1,4 +1,5 @@
-Implementation of binary search tree (BST) in C++ :
+//Implementation of binary search tree (BST) in C++ :
+//https://www.interviewbit.com/tutorial/binary-search-tree/#binary-search-tree
 
 #include<bits/stdc++.h>
 using namespace std;
