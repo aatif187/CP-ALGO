@@ -23,52 +23,33 @@ using namespace std;
 #define endl "\n"
 typedef pair<int, int> pii;
 
-int dp[11][51];
-bool isPalindrome(string s,int i,int j)
-{
-	
-	while(i<=j)
-	{
-		if(s[i]!=s[j]) return false;
-		i++;
-		j--;
-	}
-	
-	return true;	
-}
-int mcm(int e,int f)
-{
-	if(f==0 ||f==1) return f;
-	if(e==1) return f;
-	if(dp[e][f]!=-1) return dp[e][f];
-	
-	int mn=INT_MAX;
-	for(int k=1;k<=f;k++)
-	{
-		int low,high;
-		if(dp[e-1][k-1]!=-1) low=dp[e-1][k-1];
-		else low=mcm(e-1,k-1);
-		
-		if(dp[e][f-k]!=-1) high=dp[e][f-k];
-		else high=mcm(e,f-k);
-		
-		int temp= max(low,high) +1;
-		mn=min(mn,temp);
-		
-		
-	}
-	return dp[e][f]=mn;
-	
+
+int sol(int k,int n,vector<vector<int>>&dp){
+    if(n==0 || n==1) return n;
+    if(k==1) return n;
+    if(dp[k][n]!=-1) return dp[k][n];
+    int moves=n;
+    int l=0,h=n;
+    while(l<=h){
+        int mid= (l+h)/2;
+         dp[k-1][mid-1]= sol(k-1,mid-1,dp);
+         dp[k][n-mid]= sol(k,n-mid,dp);
+        int temp= 1+ max(dp[k-1][mid-1],dp[k][n-mid]);
+        moves= min(moves,temp);
+        if(dp[k-1][mid-1]<dp[k][n-mid]){
+            l=mid+1;
+        }
+        else {
+            h=mid-1;
+        }
+    }
+    return dp[k][n]=moves;
 }
 
-int main()
+int Solution::solve(int k, int n)
 {
-	int t;
-	cin>>t;
-	while(t--){
-	memset(dp,-1,sizeof(dp));
-	int n,k;
-	cin>>n>>k;
-	cout<<mcm(n,k)<<endl;
-	}
+    //dp.clear();
+    vector<vector<int>>dp(k+1,vector<int>(n+1,-1));
+    //memset(dp,-1,sizeof(dp));
+    return sol(k,n,dp);
 }
