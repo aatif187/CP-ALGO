@@ -1,0 +1,57 @@
+int mod=1003;
+map<string,int>mp;
+long long  mcm(string & s, int i, int j, bool isTrue){
+    if(i>j) return 0;
+    if(i==j){
+        if(isTrue==true){
+            return s[i]=='T';
+        }
+        else return s[i]=='F';
+    }
+    string temp=to_string(i);
+    temp.push_back(' ');
+    temp.append(to_string(j));
+    temp.push_back(' ');
+    temp.append(to_string(isTrue));
+    if(mp.find(temp)!=mp.end())return mp[temp];
+    int ans=0;
+    for(int k=i+1; k<j;k+=2){
+        int lt=mcm(s,i,k-1,true);
+        int lf= mcm(s,i,k-1,false);
+        int rt= mcm(s,k+1,j,true);
+        int rf=mcm(s,k+1,j,false);
+
+        if(s[k]=='&'){
+            if(isTrue==true){
+                ans+= (lt*rt)%mod;
+            }
+            else{
+                ans+=((lt*rf)%mod + (lf*rf)%mod + (lf*rt)%mod)%mod;
+            }
+        }
+        else if(s[k]=='|'){
+            if(isTrue==true){
+                ans+= ((lt*rt)%mod + (lt*rf)%mod + (lf*rt)%mod)%mod;
+            }
+            else{
+                ans+=(lf*rf )%mod;
+            }
+        }
+        else {
+            if(isTrue==true){
+                ans+= ((lf*rt)%mod +( lt*rf)%mod)%mod;
+            }
+            else{
+                ans+=((lf*rf )%mod+ (lt*rt)%mod )%mod;
+            }
+        }
+    }
+    return mp[temp]= ans%mod;
+}
+
+
+
+int Solution::cnttrue(string A) {
+    mp.clear();
+   return  mcm(A,0,A.length()-1,true);
+}
