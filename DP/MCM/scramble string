@@ -1,0 +1,26 @@
+
+map<string,bool>mp;
+bool mcm(string a, string  b){
+    if(a.compare(b)==0) return 1;
+    if(a.length()<=1) return 0;
+    string temp=a;
+    temp+=' ';
+    temp+=b;
+    if(mp.find(temp)!=mp.end())return mp[temp];
+    int n=a.length();
+    bool flag=false;
+    for(int i=1;i<n;i++){
+        if(( mcm(a.substr(0,i),b.substr(n-i,i)) && mcm(a.substr(i,n-i),b.substr(0,n-i)))   || ( mcm(a.substr(0,i),b.substr(0,i)) && mcm(a.substr(i,n-i),b.substr(i,n-i))) ) {
+        flag=true;
+        break;
+        }
+    }
+
+    return mp[temp]= flag;
+}
+
+int Solution::isScramble(const string A, const string B) {
+   
+    mp.clear();
+   return  mcm(A,B);
+}
