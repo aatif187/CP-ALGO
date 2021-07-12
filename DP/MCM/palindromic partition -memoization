@@ -24,7 +24,7 @@ using namespace std;
 typedef pair<int, int> pii;
 
 int dp[1000][1000];
-bool isPalindrome(string s,int i,int j)
+bool isPalindrome(string & s,int i,int j)
 {
 	
 	while(i<=j)
@@ -36,7 +36,7 @@ bool isPalindrome(string s,int i,int j)
 	
 	return true;	
 }
-int mcm(string s,int i,int j)
+int mcm(string & s,int i,int j)
 {
 	if(i>=j) return 0;
 	
