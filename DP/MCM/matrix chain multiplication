@@ -1,0 +1,17 @@
+
+int matrixMultiplication(int n, int arr[])
+    {
+        // code here
+        vector<vector<int>>dp(n,vector<int>(n,-1));
+        return helper(1,n-1,arr,dp);
+    }
+    int helper(int i,int j, int arr[], vector<vector<int>>&dp){
+        if(i==j) return 0;
+        if(dp[i][j]!=-1)return dp[i][j];
+        int ans=INT_MAX;
+        for(int ind=i;ind<j;ind++){
+            int count= helper(i,ind,arr,dp)+helper(ind+1,j,arr,dp)+ arr[i-1]*arr[ind]*arr[j];
+            ans=min(ans,count);
+        }
+        return dp[i][j]=ans;
+    }
