@@ -13,17 +13,17 @@ void dfs(int node, int par)
 		
 		if(child==par) continue;
 		
-		if(vis[child]==1)
+		if(vis[child]==0)
 		{
-			low[node]=min(low[node],in[child]);
 			
-		}
-		else
-		{
 			dfs(child,node);
 			cnt_conn++;
 			low[node]=min(low[node],low[child]);
-			if(in[node]<=low[child] && par!=-1) art.insert(node);
+			if(low[child]>=in[node] && par!=-1) art.insert(node);
+		}
+		else
+		{
+			low[node]=min(low[node],in[child]);
 		}
 		
 	}
