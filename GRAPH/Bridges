@@ -8,18 +8,17 @@ void dfs(int node, int par)
 		
 		if(child==par) continue;
 		
-		if(vis[child]==1)
+		if(vis[child]==0)
 		{
-			low[node]=min(low[node],in[child]);
-			
+			dfs(child,node);
+			low[node]=min(low[node],low[child]);
+			if(low[child]>in[node]){
+				cout<<node<<"-"<<child<<" is a bridge"<<endl;
+			}
 		}
 		else
 		{
-			dfs(child,node);
-			if(in[node]<low[child]){
-				cout<<node<<"-"<<child<<" is a bridge"<<endl;
-			}
-			low[node]=min(low[node],low[child]);
+			low[node]=min(low[node],in[child]);
 		}
 		
 	}
