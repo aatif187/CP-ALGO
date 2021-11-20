@@ -1,0 +1,23 @@
+map<int,map<int,multiset<int>>>m;
+    vector<vector<int>> verticalTraversal(TreeNode *root){
+        traverse(0,0,root);
+        vector<vector<int>> ans;
+        for(auto i:m){
+            vector<int>col;
+            for(auto e: i.second){
+                //cout<<*e<<endl;
+                col.insert(col.end(),e.second.begin(),e.second.end());
+            }
+            ans.push_back(col);
+            
+        }
+        return ans;
+    }
+    
+    void traverse(int i,int j, TreeNode* node){
+        if(node){
+            m[i][j].insert(node->val);
+            traverse(i-1,j+1, node->left);
+            traverse(i+1,j+1, node->right);
+        }
+    }
