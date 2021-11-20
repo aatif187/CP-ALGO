@@ -1,0 +1,18 @@
+//Function to check whether a binary tree is balanced or not.
+    bool balance=true;
+    bool isBalanced(Node *root)
+    {
+        //  Your Code here
+        if(!root)return true;
+        height(root);
+        return  balance;
+    }
+    int height(Node* root){
+        if(!root) return 0;
+        int l= height(root->left);
+        int r= height(root->right);
+        if(balance){
+           balance= abs(l-r)>1?false:true;
+        }
+        return max(l,r)+1;
+    }
