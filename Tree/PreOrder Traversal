@@ -1,0 +1,30 @@
+//Function to return a list containing the preorder traversal of the tree.
+// void helper(Node* root,vector<int>&ans){
+//         if(!root) return;
+//         stack<Node*>s;
+//         while(!s.empty() ||  root){
+//             if(root){
+//                 ans.push_back(root->data);
+//                 s.push(root);
+//                 root=root->left;
+//             }
+//             else{
+//                 root=s.top();
+//                 s.pop();
+//                 root=root->right;
+//             }
+//         }
+//     }
+void helper(Node* root,vector<int>&ans){
+        if(!root) return;
+        ans.push_back(root->data);
+        helper(root->left,ans);
+        helper(root->right,ans);
+        return;
+    }
+vector <int> preorder(Node* root)
+{    vector<int>ans;
+        helper(root,ans);
+        return ans;
+}
+    
