@@ -1,0 +1,42 @@
+//iterative way
+/*
+
+void postOrder2(Node* root,vector<int>&v)
+{
+  stack<Node*> st1,st2;
+  st1.push(root);
+  while(!st1.empty()){
+    root= st1.top();
+    st1.pop();
+    st2.push(root);
+    if(root->left)st1.push(root->left);
+    if(root->right)st1.push(root->right);
+  }
+  
+  while(!st2.empty()){
+  v.push_back(st2.top());
+  st2.pop();
+  }
+  
+}
+
+
+*/
+
+
+void postOrder2(Node* root,vector<int>&v)
+{
+  // Your code here
+  if(!root){
+      return;
+  }
+  postOrder2(root->left,v);
+  postOrder2(root->right,v);
+    v.push_back(root->data);
+}
+
+vector<int> postOrder(Node * root){
+    vector<int>v;
+    postOrder2(root,v);
+    return v;
+}
