@@ -1,0 +1,31 @@
+// Function to return a list containing the inorder traversal of the tree.
+    vector<int> inOrder(Node* root) {
+        // Your code here
+        vector<int>ans;
+        helper(root,ans);
+        return ans;
+    }
+    // void helper(Node* root,vector<int>&ans){
+    //     if(!root) return;
+    //     helper(root->left,ans);
+    //     ans.push_back(root->data);
+    //     helper(root->right,ans);
+    //     return;
+    // }
+    
+    void helper(Node* root,vector<int>&ans){
+        if(!root) return;
+        stack<Node*>s;
+        while(!s.empty() ||  root){
+            if(root){
+                s.push(root);
+                root=root->left;
+            }
+            else{
+                root=s.top();
+                s.pop();
+                ans.push_back(root->data);
+                root=root->right;
+            }
+        }
+    }
