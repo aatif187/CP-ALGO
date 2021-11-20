@@ -2,17 +2,15 @@
 // void helper(Node* root,vector<int>&ans){
 //         if(!root) return;
 //         stack<Node*>s;
-//         while(!s.empty() ||  root){
-//             if(root){
-//                 ans.push_back(root->data);
-//                 s.push(root);
-//                 root=root->left;
-//             }
-//             else{
+//         s.push(root);
+//         while(!s.empty()){
 //                 root=s.top();
 //                 s.pop();
-//                 root=root->right;
-//             }
+//                 ans.push_back(root->data);
+//                 if(root->right)
+//                      s.push(root->right);
+//                 if(root->left)
+//                      s.push(root->left);
 //         }
 //     }
 void helper(Node* root,vector<int>&ans){
