@@ -1,0 +1,12 @@
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+        int i=0;
+        return help(preorder, i, INT_MAX );
+    }
+    TreeNode* help(vector<int>& pre, int & i, int bound){
+        if(i==pre.size() || pre[i]>bound)return NULL;
+        TreeNode* root= new TreeNode(pre[i++]);
+        root->left= help(pre,i, root->val);
+        root->right= help(pre, i, bound);
+        return root;
+        
+    }
