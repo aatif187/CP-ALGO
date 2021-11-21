@@ -10,3 +10,6 @@ TreeNode* bstFromPreorder(vector<int>& preorder) {
         return root;
         
     }
+
+
+//TC O(3N)
