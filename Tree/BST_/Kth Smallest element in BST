@@ -1,0 +1,20 @@
+ int kthSmallest(TreeNode* root, int k) {
+        int ans=0;
+        help(root,k,ans);
+        return ans;
+    }
+    void help(TreeNode* root,int & k,int &ans){
+        if(!root) return;
+        help(root->left,k,ans);
+        k--;
+        if(k==0){
+            ans=root->val;
+        }
+        help(root->right,k,ans);
+        return ;
+    }
+    
+    
+    
+    
+  // for kth maximum>>>>> traverse and find n>>>then find n-k smallest
