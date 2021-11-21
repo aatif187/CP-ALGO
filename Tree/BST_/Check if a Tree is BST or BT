@@ -1,0 +1,13 @@
+bool isValidBST(TreeNode* root) {
+        
+        return valid(root,LONG_MIN,LONG_MAX);
+    }
+    bool valid(TreeNode* rt, long long start,long long end){
+        if(!rt) return true;
+        if(rt->val> start && rt->val<end){
+            //cout<<"jjj"<<endl;
+            return valid(rt->left,start,rt->val) && valid(rt->right,rt->val, end);
+        }
+        //cout<<"here"<<endl;
+        return false;
+    }
