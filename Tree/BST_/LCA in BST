@@ -1,0 +1,12 @@
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+            int pval=p->val;
+            int qval= q->val;
+            int rval= root->val;
+            if(rval>pval && rval>qval){
+                return lowestCommonAncestor(root->left,p,q);
+            }
+            if(rval<pval && rval<qval){
+                return lowestCommonAncestor(root->right,p,q);
+            }
+            return root;  
+    }
