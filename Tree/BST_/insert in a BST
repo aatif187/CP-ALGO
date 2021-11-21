@@ -1,0 +1,23 @@
+TreeNode* insertIntoBST(TreeNode* root, int val) {
+        TreeNode* head= root;
+        if(!root) return new TreeNode(val);
+        while(1){
+            if(val>=root->val ){
+                if(!root->right){
+                    TreeNode * temp= new TreeNode(val);
+                    root->right=temp;
+                    break;
+                }
+                root=root->right;
+            }
+            else{
+               if(!root->left){
+                    TreeNode * temp= new TreeNode(val);
+                    root->left=temp;
+                    break;
+                }
+                root=root->left; 
+            }
+        }
+        return head;
+    }
