@@ -1,0 +1,99 @@
+/*
+HELPFUL when we have to query in a subarray as well as update.
+if we apply brute force, query can take O(n) and update can take O(1)
+else if we apply prefix sum method, query will take O(1) and update will take o(n) to update the prefix array.
+
+hence it will do both task in log(n) time
+
+
+source: https://www.youtube.com/watch?v=xOogmSgym9Y&list=PLfqMhTWNBTe0b2nM6JHVCnAkhQRGiZMSJ&index=205
+*/
+
+
+
+//TC  log(n)--query; log(n)--update
+
+
+
+#include <iostream>
+using namespace std;
+
+const int N= 1e5+2;
+int tree[4*N],a[N];
+
+void build(int node, int st, int en){
+    if(st==en){
+        tree[node]=a[st];
+        return;
+    }
+
+    int mid=(st+en)/2;
+    build(node*2,st, mid);
+    build(node*2+1, mid+1, en);
+
+
+    //this step changes for differen types of queries
+    tree[node]=tree[node*2]+tree[node*2+1];
+}
+
+int query(int node, int st, int en, int l, int r){
+    //not intersecting
+    if(st>r|| en<l) return 0;
+
+    //st and en completly overlapping l and r
+    if(st>=l && en<=r) return tree[node];
+
+    int mid=(st+en)/2;
+    int lq= query(node*2, st, mid, l, r);
+    int rq= query(node*2+1, mid+1, en, l, r);
+
+    return lq+rq;
+}
+
+void update(int node, int st, int en, int index, int value){
+    if(st==en){
+        a[index]=value;
+        tree[node]=value;
+        return;
+    }
+
+    int mid= (st+en)/2;
+
+    if(index<=mid){
+        update(node*2, st, mid, index, value);
+    }
+    else{
+        update(node*2+1, mid+1, en, index, value);
+    }
+
+    //update
+    tree[node]=tree[node*2]+tree[node*2+1];
+
+}
+int main() {
+    int n;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    //build segment tree
+     build(1,0,n-1);
+
+    while(1){
+        int t;
+        cin>>t;
+        if(t==-1)break;
+        if(t==1){
+            int l,r;
+            cin>>l>>r;
+            cout<<query(1,0,n-1,l,r)<<endl;
+        }
+        if(t==2){
+            int ind,val;
+            cin>>ind>>val;
+            update(1,0,n-1,ind,val);
+            cout<<query(1,0,n-1,0,n-1)<<endl;
+        }
+    }
+}
+
